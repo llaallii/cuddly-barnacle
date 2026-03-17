@@ -13,6 +13,10 @@ A running **case study** (stepper-motor-driven peristaltic dosing module) is int
 ## Framework overview — how the seven parts connect
 
 ```mermaid
+---
+config:
+  layout: elk
+---
 graph TD
     A["<b>Part A</b><br/>Framework Scope<br/>& Purpose"] --> B["<b>Part B</b><br/>Framework<br/>Architecture"]
     B --> C["<b>Part C</b><br/>Standards-to-Model<br/>Mapping Rules"]
@@ -122,46 +126,49 @@ graph LR
 ### A.6 Diagram: Framework coverage mapped to product lifecycle
 
 ```mermaid
-graph LR
-    subgraph LIFECYCLE["Product Lifecycle"]
-        direction LR
-        L1["Concept"] --> L2["Architecture"]
-        L2 --> L3["Detailed<br/>Design"]
-        L3 --> L4["Verification"]
-        L4 --> L5["Validation"]
-        L5 --> L6["Transfer"]
-        L6 --> L7["Production"]
-        L7 --> L8["Post-Market"]
-    end
-
-    subgraph FRAMEWORK["MBSE Framework Coverage"]
-        direction TB
-        F1["Stakeholder Needs<br/>& Intended Use"]
-        F2["Requirements<br/>Hierarchy"]
-        F3["Structural &<br/>Behavioral Models"]
-        F4["Interface<br/>Control"]
-        F5["Risk &<br/>FMEA"]
-        F6["V&V<br/>Plans & Evidence"]
-        F7["Manufacturing<br/>Specs & BOM"]
-        F8["Issue Mgmt<br/>& CAPA"]
-    end
-
-    L1 --- F1
-    L1 --- F2
-    L2 --- F3
-    L2 --- F4
-    L3 --- F3
-    L3 --- F5
+---
+config:
+  layout: elk
+---
+flowchart TB
+ subgraph LIFECYCLE["Product Lifecycle"]
+    direction LR
+        L2["Architecture"]
+        L1["Concept"]
+        L3["Detailed<br>Design"]
+        L4["Verification"]
+        L5["Validation"]
+        L6["Transfer"]
+        L7["Production"]
+        L8["Post-Market"]
+  end
+ subgraph FRAMEWORK["MBSE Framework Coverage"]
+    direction TB
+        F1["Stakeholder Needs<br>&amp; Intended Use"]
+        F2["Requirements<br>Hierarchy"]
+        F3["Structural &amp;<br>Behavioral Models"]
+        F4["Interface<br>Control"]
+        F5["Risk &amp;<br>FMEA"]
+        F6["V&amp;V<br>Plans &amp; Evidence"]
+        F7["Manufacturing<br>Specs &amp; BOM"]
+        F8["Issue Mgmt<br>&amp; CAPA"]
+  end
+    L1 --> L2
+    L2 --> L3
+    L3 --> L4
+    L4 --> L5
+    L5 --> L6
+    L6 --> L7
+    L7 --> L8
+    L1 --- F1 & F2
+    L2 --- F3 & F4
+    L3 --- F3 & F5
     L4 --- F6
     L5 --- F6
     L6 --- F7
     L7 --- F7
     L8 --- F8
-    F5 -.- L1
-    F5 -.- L2
-    F5 -.- L3
-    F5 -.- L4
-    F5 -.- L8
+    F5 -.- L1 & L2 & L3 & L4 & L8
 
     style LIFECYCLE fill:#edf6f9,stroke:#006d77,color:#000
     style FRAMEWORK fill:#fefae0,stroke:#606c38,color:#000
@@ -197,19 +204,12 @@ graph LR
 - Package hierarchy directly supports DHF structure, DMR structure, and risk management file structure
 
 ```mermaid
-graph TD
-    ROOT["📁 DrugDeliveryDevice_Project<br/><i>Root Model</i>"]
-
-    ROOT --> P01["📁 01_StakeholderNeeds<br/><i>Use cases, user profiles,<br/>intended use, environments</i>"]
-    ROOT --> P02["📁 02_Requirements<br/><i>4-tier hierarchy: StRS → SyRS<br/>→ SubSys → Component</i>"]
-    ROOT --> P03["📁 03_Architecture<br/><i>System/Subsystem/Component<br/>BDD, IBD, Interface Blocks</i>"]
-    ROOT --> P04["📁 04_Behavior<br/><i>State machines, activities,<br/>sequences, parametric</i>"]
-    ROOT --> P05["📁 05_RiskManagement<br/><i>Hazards, FMEA, risk controls,<br/>residual risk, risk matrix</i>"]
-    ROOT --> P06["📁 06_Verification<br/><i>Test cases, test suites,<br/>V&V matrices, evidence refs</i>"]
-    ROOT --> P07["📁 07_SoftwareArchitecture<br/><i>IEC 62304: SW system/items/<br/>units, SOUP, anomalies</i>"]
-    ROOT --> P08["📁 08_ManufacturingTransfer<br/><i>Production specs, BOM,<br/>process validation, CTQs</i>"]
-    ROOT --> P09["📁 09_ReusableLibrary<br/><i>Value types, standard blocks,<br/>interface blocks, stereotypes</i>"]
-    ROOT --> P10["📁 10_TraceabilityViews<br/><i>Matrices, dashboards,<br/>gap analysis, compliance reports</i>"]
+---
+config:
+  layout: elk
+---
+flowchart LR
+    ROOT["📁 DrugDeliveryDevice_Project<br><i>Root Model</i>"] --> P01["📁 01_StakeholderNeeds<br><i>Use cases, user profiles,<br>intended use, environments</i>"] & P02["📁 02_Requirements<br><i>4-tier hierarchy: StRS → SyRS<br>→ SubSys → Component</i>"] & P03["📁 03_Architecture<br><i>System/Subsystem/Component<br>BDD, IBD, Interface Blocks</i>"] & P04["📁 04_Behavior<br><i>State machines, activities,<br>sequences, parametric</i>"] & P05["📁 05_RiskManagement<br><i>Hazards, FMEA, risk controls,<br>residual risk, risk matrix</i>"] & P06["📁 06_Verification<br><i>Test cases, test suites,<br>V&amp;V matrices, evidence refs</i>"] & P07["📁 07_SoftwareArchitecture<br><i>IEC 62304: SW system/items/<br>units, SOUP, anomalies</i>"] & P08["📁 08_ManufacturingTransfer<br><i>Production specs, BOM,<br>process validation, CTQs</i>"] & P09["📁 09_ReusableLibrary<br><i>Value types, standard blocks,<br>interface blocks, stereotypes</i>"] & P10["📁 10_TraceabilityViews<br><i>Matrices, dashboards,<br>gap analysis, compliance reports</i>"]
 
     style ROOT fill:#1b4332,stroke:#081c15,color:#fff
     style P01 fill:#2d6a4f,stroke:#1b4332,color:#fff
@@ -232,32 +232,33 @@ graph TD
 - Issue/CAPA → Architecture + Requirements + Verification (trace)
 
 ```mermaid
-graph LR
-    P01["01<br/>Stakeholder<br/>Needs"] -->|"refine /<br/>deriveReqt"| P02["02<br/>Requirements"]
-    P02 -->|"satisfy"| P03["03<br/>Architecture"]
-    P02 -->|"verify"| P06["06<br/>Verification"]
-    P02 -->|"deriveReqt"| P07["07<br/>Software<br/>Architecture"]
-    P03 -->|"allocate"| P07
-    P03 -->|"trace"| P08["08<br/>Manufacturing"]
-    P04["04<br/>Behavior"] -->|"owned by<br/>blocks in"| P03
-    P05["05<br/>Risk"] -->|"mitigate →<br/>blocks in"| P03
-    P05 -->|"verify"| P06
-    P05 -->|"trace to<br/>hazards from"| P01
-    P08 -->|"acceptance<br/>criteria from"| P02
-    P10["10<br/>Traceability"] -.->|"queries<br/>across all"| P01
-    P10 -.-> P02
-    P10 -.-> P03
-    P10 -.-> P05
-    P10 -.-> P06
+---
+config:
+  layout: elk
+---
+flowchart TB
+    P01["01<br>Stakeholder<br>Needs"] -- refine /<br>deriveReqt --> P02["02<br>Requirements"]
+    P02 -- satisfy --> P03["03<br>Architecture"]
+    P02 -- verify --> P06["06<br>Verification"]
+    P02 -- deriveReqt --> P07["07<br>Software<br>Architecture"]
+    P03 -- allocate --> P07
+    P03 -- trace --> P08["08<br>Manufacturing"]
+    P04["04<br>Behavior"] -- owned by<br>blocks in --> P03
+    P05["05<br>Risk"] -- mitigate →<br>blocks in --> P03
+    P05 -- verify --> P06
+    P05 -- trace to<br>hazards from --> P01
+    P08 -- acceptance<br>criteria from --> P02
+    P10["10<br>Traceability"] -. queries<br>across all .-> P01
+    P10 -.-> P02 & P03 & P05 & P06
 
     style P01 fill:#2d6a4f,stroke:#1b4332,color:#fff
     style P02 fill:#2d6a4f,stroke:#1b4332,color:#fff
     style P03 fill:#40916c,stroke:#2d6a4f,color:#fff
-    style P04 fill:#40916c,stroke:#2d6a4f,color:#fff
-    style P05 fill:#52b788,stroke:#40916c,color:#000
     style P06 fill:#52b788,stroke:#40916c,color:#000
     style P07 fill:#40916c,stroke:#2d6a4f,color:#fff
     style P08 fill:#74c69d,stroke:#52b788,color:#000
+    style P04 fill:#40916c,stroke:#2d6a4f,color:#fff
+    style P05 fill:#52b788,stroke:#40916c,color:#000
     style P10 fill:#95d5b2,stroke:#74c69d,color:#000
 ```
 
@@ -299,32 +300,23 @@ graph LR
 - Where risk management (ISO 14971) acts as the spine connecting all others
 
 ```mermaid
-graph TD
-    ISO13485["<b>ISO 13485:2016</b><br/>QMS & Design Controls<br/><i>Overarching process framework</i>"]
-    IEC60601["<b>IEC 60601-1</b><br/>Basic Safety &<br/>Essential Performance<br/><i>Electrical/PEMS safety</i>"]
-    ISO14971["<b>ISO 14971:2019</b><br/>Risk Management<br/><i>Lifecycle risk process</i>"]
-    IEC62304["<b>IEC 62304</b><br/>Software Lifecycle<br/><i>SW development process</i>"]
-    IEC62366["<b>IEC 62366-1</b><br/>Usability Engineering<br/><i>Use-related risk & HMI</i>"]
-    ISO11608["<b>ISO 11608-4:2022</b><br/>Electronic Injection<br/>Systems<br/><i>Actuation-specific safety</i>"]
-    IEC60601_12["IEC 60601-1-2<br/><i>EMC</i>"]
-    IEC60601_18["IEC 60601-1-8<br/><i>Alarms</i>"]
-    IEC60601_111["IEC 60601-1-11<br/><i>Home Healthcare</i>"]
+---
+config:
+  layout: elk
+---
+flowchart TB
+    ISO13485["<b>ISO 13485:2016</b><br>QMS &amp; Design Controls<br><i>Overarching process framework</i>"] -- requires risk<br>management per --> ISO14971["<b>ISO 14971:2019</b><br>Risk Management<br><i>Lifecycle risk process</i>"]
+    ISO13485 -- design controls<br>frame --> IEC60601["<b>IEC 60601-1</b><br>Basic Safety &amp;<br>Essential Performance<br><i>Electrical/PEMS safety</i>"]
+    IEC60601 -- requires risk<br>process per --> ISO14971
+    IEC60601 -- Clause 14 links<br>SW lifecycle to --> IEC62304["<b>IEC 62304</b><br>Software Lifecycle<br><i>SW development process</i>"]
+    IEC60601 -- requires usability<br>process per --> IEC62366["<b>IEC 62366-1</b><br>Usability Engineering<br><i>Use-related risk &amp; HMI</i>"]
+    ISO11608["<b>ISO 11608-4:2022</b><br>Electronic Injection<br>Systems<br><i>Actuation-specific safety</i>"] -- draws electrical<br>safety from --> IEC60601
+    ISO11608 -- requires risk<br>approach per --> ISO14971
+    ISO11608 -- invokes usability<br>from --> IEC62366
+    ISO11608 -- EMC testing per --> IEC60601_12["IEC 60601-1-2<br><i>EMC</i>"]
+    IEC60601 --- IEC60601_12 & IEC60601_18["IEC 60601-1-8<br><i>Alarms</i>"] & IEC60601_111["IEC 60601-1-11<br><i>Home Healthcare</i>"]
 
-    ISO13485 -->|"requires risk<br/>management per"| ISO14971
-    ISO13485 -->|"design controls<br/>frame"| IEC60601
-    IEC60601 -->|"requires risk<br/>process per"| ISO14971
-    IEC60601 -->|"Clause 14 links<br/>SW lifecycle to"| IEC62304
-    IEC60601 -->|"requires usability<br/>process per"| IEC62366
-    ISO11608 -->|"draws electrical<br/>safety from"| IEC60601
-    ISO11608 -->|"requires risk<br/>approach per"| ISO14971
-    ISO11608 -->|"invokes usability<br/>from"| IEC62366
-    ISO11608 -->|"EMC testing per"| IEC60601_12
-    IEC60601 --- IEC60601_12
-    IEC60601 --- IEC60601_18
-    IEC60601 --- IEC60601_111
-
-    ISO14971:::riskStyle
-
+     ISO14971:::riskStyle
     classDef riskStyle fill:#e63946,stroke:#d00000,color:#fff
     style ISO13485 fill:#003049,stroke:#001d3d,color:#fff
     style IEC60601 fill:#d62828,stroke:#9d0208,color:#fff
@@ -498,14 +490,18 @@ classDiagram
 - Cross-package relationship patterns
 
 ```mermaid
-graph LR
-    STD["Standard<br/>Clause"] -->|"trace"| REQ["System<br/>Requirement"]
-    REQ -->|"deriveReqt"| SUBREQ["Subsystem<br/>Requirement"]
-    SUBREQ -->|"satisfy<br/>(from block)"| BLOCK["Design<br/>Block"]
-    SUBREQ -->|"verify<br/>(from test)"| TEST["Test<br/>Case"]
-    HAZ["Hazard"] -->|"mitigate<br/>(via risk control)"| RC["Risk<br/>Control"]
-    RC -->|"satisfy<br/>(from block)"| BLOCK
-    RC -->|"verify<br/>(from test)"| TEST
+---
+config:
+  layout: elk
+---
+flowchart TB
+    STD["Standard<br>Clause"] -- trace --> REQ["System<br>Requirement"]
+    REQ -- deriveReqt --> SUBREQ["Subsystem<br>Requirement"]
+    SUBREQ -- satisfy<br>(from block) --> BLOCK["Design<br>Block"]
+    SUBREQ -- verify<br>(from test) --> TEST["Test<br>Case"]
+    HAZ["Hazard"] -- mitigate<br>(via risk control) --> RC["Risk<br>Control"]
+    RC -- satisfy<br>(from block) --> BLOCK
+    RC -- verify<br>(from test) --> TEST
 
     style STD fill:#003049,stroke:#001d3d,color:#fff
     style REQ fill:#2d6a4f,stroke:#1b4332,color:#fff
@@ -559,35 +555,36 @@ graph LR
 - Review gates at each transition
 
 ```mermaid
-graph TD
-    subgraph LEFT["Decomposition (Design)"]
-        direction TB
-        L1["Stakeholder Needs<br/><i>Use Cases, StRS</i>"]
-        L2["System Requirements<br/><i>SyRS, System Context BDD</i>"]
-        L3["Subsystem Design<br/><i>BDD/IBD, State Machines</i>"]
-        L4["Component Design<br/><i>Leaf blocks, value properties</i>"]
-    end
-
-    subgraph RIGHT["Integration (Verification)"]
-        direction TB
-        R1["System Validation<br/><i>Clinical workflow, summative eval</i>"]
-        R2["System Verification<br/><i>IEC 60601-1 type tests</i>"]
-        R3["Integration Testing<br/><i>Interface verification, IBD tests</i>"]
-        R4["Unit Testing<br/><i>Component acceptance criteria</i>"]
-    end
-
-    L1 ---|"SRR"| L2
-    L2 ---|"PDR"| L3
-    L3 ---|"CDR"| L4
-    L4 -.->|"build &<br/>integrate"| R4
-    R4 ---|"DVR"| R3
+---
+config:
+  layout: elk
+---
+flowchart TB
+ subgraph LEFT["Decomposition (Design)"]
+    direction TB
+        L1["Stakeholder Needs<br><i>Use Cases, StRS</i>"]
+        L2["System Requirements<br><i>SyRS, System Context BDD</i>"]
+        L3["Subsystem Design<br><i>BDD/IBD, State Machines</i>"]
+        L4["Component Design<br><i>Leaf blocks, value properties</i>"]
+  end
+ subgraph RIGHT["Integration (Verification)"]
+    direction TB
+        R1["System Validation<br><i>Clinical workflow, summative eval</i>"]
+        R2["System Verification<br><i>IEC 60601-1 type tests</i>"]
+        R3["Integration Testing<br><i>Interface verification, IBD tests</i>"]
+        R4["Unit Testing<br><i>Component acceptance criteria</i>"]
+  end
+    L1 -- SRR --- L2
+    L2 -- PDR --- L3
+    L3 -- CDR --- L4
+    L4 -. build &amp;<br>integrate .-> R4
+    R4 -- DVR --- R3
     R3 --- R2
-    R2 ---|"Validation<br/>Review"| R1
-
-    L1 -.-|"verify"| R1
-    L2 -.-|"verify"| R2
-    L3 -.-|"verify"| R3
-    L4 -.-|"verify"| R4
+    R2 -- Validation<br>Review --- R1
+    L1 -. verify .- R1
+    L2 -. verify .- R2
+    L3 -. verify .- R3
+    L4 -. verify .- R4
 
     style LEFT fill:#edf6f9,stroke:#006d77,color:#000
     style RIGHT fill:#fefae0,stroke:#606c38,color:#000
@@ -653,6 +650,10 @@ graph TD
 - System context boundary for the case study subsystem
 
 ```mermaid
+---
+config:
+  layout: elk
+---
 graph TD
     subgraph CASE_STUDY["Case Study Subsystem Boundary"]
         direction TB
